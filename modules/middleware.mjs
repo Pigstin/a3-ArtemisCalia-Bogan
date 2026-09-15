@@ -1,7 +1,5 @@
 /**
- * @param {Request} req 
- * @param {Response} res 
- * @param {Function} next 
+ * @type {import("express").RequestHandler}
  */
 export function log(req, res, next) {
     let current = Temporal.Now.plainTimeISO().toString().substring(0,8)
@@ -10,4 +8,14 @@ export function log(req, res, next) {
 
     // log req.params?
     next()
+}
+
+export function checkCollection(options) {
+    return (req,res,next) => {
+        if (options.col !== null) {
+            next()
+        } else {
+            res.status(503).send()
+        }
+    }
 }
