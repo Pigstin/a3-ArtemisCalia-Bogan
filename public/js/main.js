@@ -17,8 +17,9 @@ const submit = async function( event ) {
   // console.log(json)
   // console.log(body)
 
-  const response = await fetch( '/submit', {
+  const response = await fetch( '/add', {
     method:'POST',
+    headers: { 'Content-Type': 'application/json' },
     body 
   })
 
@@ -85,7 +86,11 @@ const delData = async function(event) {
   const json = {index:`${event.target.getAttribute("order")}`}
   const body = JSON.stringify(json)
 
-  const response = await fetch('/delete', {method:'POST', body})
+  const response = await fetch('/remove', {
+    method:'POST', 
+    headers: { 'Content-Type': 'application/json' },
+    body
+  })
   const text = await response.text()
 
   // console.log( 'response:\n', text )
@@ -102,7 +107,6 @@ const fancifyTime = function(time) {
 
 window.onload = function() {
   document.getElementById("deadline").value = fancifyTime(Date.now())
-
 
   const submit_ = document.getElementById('submit')
   submit_.onclick = submit

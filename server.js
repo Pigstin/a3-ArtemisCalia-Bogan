@@ -6,7 +6,6 @@ const path = require('path');
 const { MongoClient, ServerApiVersion, Collection } = require('mongodb');
 
 const util       = require('./modules/util.mjs');
-const data       = require('./modules/data.mjs');
 const middleware = require('./modules/middleware.mjs')
 const routes     = require('./modules/routes.mjs')
 
@@ -14,15 +13,7 @@ const serverData = util.setup();
 
 const dburi = `mongodb+srv://${serverData.user}:${serverData.pass}@${serverData.host}`;
 // create mongoDb client
-const dbclient = new MongoClient(dburi
-    // , {
-    // serverApi: {
-    //     version: ServerApiVersion.v1,
-    //     strict: true,
-    //     deprecationErrors: true,
-    // }
-// }
-);
+const dbclient = new MongoClient(dburi);
 
 // middleware and app config
 const app = express();
@@ -58,7 +49,7 @@ app.use(middleware.checkCollection(options))
 
 app.get('/', routes.index);
 
-app.get('/docs', routes.docs(options))
+app.get('/data', routes.docs(options))
 app.post('/add', routes.add(options))
 app.post('/remove', routes.remove(options))
 app.post('/update', routes.update(options))
