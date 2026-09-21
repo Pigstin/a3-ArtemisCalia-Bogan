@@ -38,7 +38,7 @@ export function remove(options) {
                 delres = await options.col.deleteOne(doc)
             }
         }
-        updateOrder()
+        updateOrder(options)
         res.json( delres )
     }
 }
@@ -57,7 +57,7 @@ export function update(options) {
         // )
 
         // up until here order is not changed for either object
-        updateOrder()
+        updateOrder(options)
         res.json( result )
     }
 }
@@ -68,7 +68,6 @@ async function updateOrder(options) {
     let appdata = new AppData(data)
     appdata.orderEntries()
     appdata.entries.forEach( async (element) => {
-        console.log(element)
         await options.col.updateOne(
             { _id: new ObjectId( element._id ) },
             { $set:{ order:element.order } }
